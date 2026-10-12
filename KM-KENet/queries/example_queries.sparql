@@ -1,0 +1,30 @@
+# Example SPARQL queries over outputs/knowledge_graph/knowledge_graph.ttl
+# (load the file into any triple store, e.g. Apache Jena Fuseki or GraphDB,
+#  or run `python -m step5_knowledge_graph.sparql` which uses rdflib).
+
+PREFIX kmkg: <https://github.com/shkomq/SciKG-LLM/kmkg#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+# --- Q1. Drugs that treat diabetes, with their Kurdish names -----------------
+SELECT ?drug ?drug_ckb ?drug_en WHERE {
+  ?disease rdfs:label "diabetes"@en .
+  ?drug kmkg:TREATS ?disease ;
+        a kmkg:Drug ;
+        rdfs:label ?drug_ckb .
+  FILTER(lang(?drug_ckb) = "ckb")
+  OPTIONAL { ?drug rdfs:label ?drug_en FILTER(lang(?drug_en) = "en") }
+}
+
+# --- Q2. Symptoms of every disease, ranked by evidence ----------------------
+# SELECT ?disease_en ?symptom_en ?support WHERE {
+#   ?s a kmkg:Statement ; kmkg:subject ?d ; kmkg:predicate kmkg:HAS_SYMPTOM ;
+#      kmkg:object ?sym ; kmkg:support ?support .
+#   ?d rdfs:label ?disease_en FILTER(lang(?disease_en) = "en")
+#   ?sym rdfs:label ?symptom_en FILTER(lang(?symptom_en) = "en")
+# } ORDER BY DESC(?support)
+
+# --- Q3. Drug dosages mentioned in the corpus -------------------------------
+# SELECT ?drug_label ?dosage_label WHERE {
+#   ?drug kmkg:HAS_DOSAGE ?dosage ; rdfs:label ?drug_label .
+#   ?dosage rdfs:label ?dosage_label .
+# }

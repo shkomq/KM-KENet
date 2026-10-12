@@ -1,0 +1,128 @@
+# KM-KENet Sorani Kurdish medical lexicon (gazetteer) used by the dictionary-based
+# labeling functions, entity canonicalisation and lexicon-based translation.
+# Columns are TAB-separated; aliases are separated by "|".
+id	kurdish	english	type	aliases
+diabetes	نەخۆشی شەکرە	diabetes	DISEASE	شەکرە|نەخۆشیی شەکرە|شەکرەی خوێن
+diabetes_type2	شەکرەی جۆری دووەم	type 2 diabetes	DISEASE	شەکرەی جۆری ٢
+hypertension	پەستانی خوێنی بەرز	hypertension	DISEASE	فشاری خوێنی بەرز|بەرزبوونەوەی پەستانی خوێن|بەرزی پەستانی خوێن|بەرزبوونەوەی فشاری خوێن
+heart_disease	نەخۆشی دڵ	heart disease	DISEASE	نەخۆشییەکانی دڵ|نەخۆشیی دڵ
+heart_attack	جەڵتەی دڵ	heart attack	DISEASE	سەکتەی دڵ
+stroke	جەڵتەی مێشک	stroke	DISEASE	سەکتەی مێشک
+asthma	ڕەبۆ	asthma	DISEASE	نەخۆشی ڕەبۆ
+cancer	شێرپەنجە	cancer	DISEASE	نەخۆشی شێرپەنجە
+breast_cancer	شێرپەنجەی مەمک	breast cancer	DISEASE	شێرپەنجەی سنگ
+lung_cancer	شێرپەنجەی سی	lung cancer	DISEASE	شێرپەنجەی سییەکان
+tuberculosis	سیل	tuberculosis	DISEASE	نەخۆشی سیل
+thalassemia	تالاسیمیا	thalassemia	DISEASE	سەلاسیمیا|نەخۆشی تالاسیمیا
+brucellosis	تای مالتا	brucellosis	DISEASE	برۆسێلۆسیس
+leishmaniasis	لیشمانیا	leishmaniasis	DISEASE	لیشمانیاسیس
+cholera	کۆلێرا	cholera	DISEASE	نەخۆشی کۆلێرا
+anemia	کەمخوێنی	anemia	DISEASE	کەمی خوێن
+common_cold	هەڵامەت	common cold	DISEASE	سەرماخواردن
+influenza	ئەنفلۆنزا	influenza	DISEASE	ئانفلۆنزا|ئەنفلوەنزا
+covid19	کۆرۆنا	COVID-19	DISEASE	کۆڤید|ڤایرۆسی کۆرۆنا
+measles	سورێژە	measles	DISEASE	سوورێژە
+chickenpox	ئاوڵە	chickenpox	DISEASE	ئاوڵەی منداڵان
+hepatitis	هەوکردنی جگەر	hepatitis	DISEASE	هەوی جگەر
+jaundice	زەردوویی	jaundice	DISEASE	زەردی
+kidney_stones	بەردی گورچیلە	kidney stones	DISEASE	بەردی گورچیلەکان
+kidney_failure	وەستانی گورچیلە	kidney failure	DISEASE	پەککەوتنی گورچیلە|کەمئیشکردنی گورچیلە
+bacterial_infection	هەوکردنی بەکتریایی	bacterial infection	DISEASE	هەوکردنی بەکتیری
+pneumonia	هەوکردنی سییەکان	pneumonia	DISEASE	هەوکردنی سی
+osteoporosis	پووکانەوەی ئێسک	osteoporosis	DISEASE	لاوازی ئێسک
+obesity	قەڵەوی	obesity	DISEASE	قەڵەوی زۆر
+depression	خەمۆکی	depression	DISEASE	نەخۆشی خەمۆکی
+chemical_poisoning	ژەهراویبوونی کیمیایی	chemical poisoning	DISEASE	ژەهراویبوون بە گازی خەردەل
+fever	تا	fever	SYMPTOM	گەرمی لەش|بەرزبوونەوەی پلەی گەرمی
+headache	سەرئێشە	headache	SYMPTOM	سەرێشە|ئازاری سەر
+cough	کۆکە	cough	SYMPTOM	کۆکەی وشک
+chronic_cough	کۆکەی درێژخایەن	chronic cough	SYMPTOM
+fatigue	ماندوویی	fatigue	SYMPTOM	ماندووبوون|هیلاکی
+thirst	تینوێتی	excessive thirst	SYMPTOM	تینووبوون
+frequent_urination	میزکردنی زۆر	frequent urination	SYMPTOM	زۆر میزکردن
+nausea	هێڵنج	nausea	SYMPTOM	دڵتێکهەڵاتن|هێڵنجدان
+vomiting	ڕشانەوە	vomiting	SYMPTOM
+diarrhea	سکچوون	diarrhea	SYMPTOM	سک چوون
+constipation	قەبزی	constipation	SYMPTOM
+dyspnea	تەنگەنەفەسی	shortness of breath	SYMPTOM	هەناسەتەنگی
+chest_pain	ئازاری سنگ	chest pain	SYMPTOM
+abdominal_pain	ئازاری سک	abdominal pain	SYMPTOM	سکئێشە
+joint_pain	ئازاری جومگە	joint pain	SYMPTOM	ئازاری جومگەکان
+muscle_pain	ئازاری ماسولکە	muscle pain	SYMPTOM	ئازاری ماسولکەکان
+back_pain	ئازاری پشت	back pain	SYMPTOM	پشتئێشە
+bleeding	خوێنبەربوون	bleeding	SYMPTOM	خوێن بەربوون
+skin_ulcer	برینی پێست	skin ulcer	SYMPTOM
+skin_rash	خورشتی پێست	skin rash	SYMPTOM	پەڵەی پێست
+dizziness	سەرگێژخواردن	dizziness	SYMPTOM	گێژبوون
+sweating	ئارەقکردنەوە	sweating	SYMPTOM
+weight_loss	کەمبوونەوەی کێش	weight loss	SYMPTOM	دابەزینی کێش
+dehydration	وشکبوونەوەی لەش	dehydration	SYMPTOM
+blurred_vision	لێڵبوونی بینین	blurred vision	SYMPTOM
+insomnia	بێخەوی	insomnia	SYMPTOM
+insulin	ئەنسۆلین	insulin	DRUG	ئینسولین|ئەنسولین
+metformin	مێتفۆرمین	metformin	DRUG	میتفۆرمین
+amlodipine	ئەملۆدیپین	amlodipine	DRUG
+paracetamol	پاراسیتامۆڵ	paracetamol	DRUG	پاراسیتامۆل
+aspirin	ئەسپرین	aspirin	DRUG	ئاسپرین
+ibuprofen	ئایبوپرۆفین	ibuprofen	DRUG	ئیبوپرۆفین
+amoxicillin	ئەمۆکسیسیلین	amoxicillin	DRUG	ئامۆکسیسیلین
+salbutamol	سالبیوتامۆڵ	salbutamol	DRUG	سالبیوتامۆل|ڤێنتۆلین
+doxycycline	دۆکسیسایکلین	doxycycline	DRUG
+rifampicin	ڕیفامپیسین	rifampicin	DRUG	ریفامپیسین
+isoniazid	ئیزۆنیازید	isoniazid	DRUG
+meglumine_antimoniate	گلوکانتیم	meglumine antimoniate (Glucantime)	DRUG
+deferoxamine	دیفێرۆکسامین	deferoxamine	DRUG	دیسفێرال
+antibiotic	دژەبەکتریا	antibiotic	DRUG	ئەنتیبایۆتیک|دژە بەکتریا
+blood_transfusion	گواستنەوەی خوێن	blood transfusion	PROCEDURE	خوێن گواستنەوە
+oral_rehydration	شلەی ئاوپێدانەوە	oral rehydration solution	DRUG
+chemotherapy	چارەسەری کیمیایی	chemotherapy	PROCEDURE
+radiotherapy	چارەسەری تیشکی	radiotherapy	PROCEDURE	تیشکدان
+surgery	نەشتەرگەری	surgery	PROCEDURE	نەشتەرگەریی
+oxygen_therapy	هەناسەدانی ئۆکسجین	oxygen therapy	PROCEDURE
+vaccine	ڤاکسین	vaccine	DRUG	کوتان
+iron_supplement	حەبی ئاسن	iron supplement	DRUG
+physiotherapy	چارەسەری سروشتی	physiotherapy	PROCEDURE
+tamsulosin	تامسولۆسین	tamsulosin	DRUG
+heart	دڵ	heart	BODY_PART
+lungs	سییەکان	lungs	BODY_PART
+kidney	گورچیلە	kidney	BODY_PART	گورچیلەکان
+liver	جگەر	liver	BODY_PART
+stomach	گەدە	stomach	BODY_PART
+brain	مێشک	brain	BODY_PART
+skin	پێست	skin	BODY_PART
+blood	خوێن	blood	BODY_PART
+joints	جومگە	joints	BODY_PART	جومگەکان
+breast	مەمک	breast	BODY_PART
+intestine	ڕیخۆڵە	intestine	BODY_PART	ڕیخۆڵەکان
+bone	ئێسک	bone	BODY_PART	ئێسکەکان
+eye	چاو	eye	BODY_PART	چاوەکان
+chest	سنگ	chest	BODY_PART
+muscle	ماسولکە	muscle	BODY_PART	ماسولکەکان
+pancreas	پەنکریاس	pancreas	BODY_PART
+blood_vessels	خوێنبەرەکان	blood vessels	BODY_PART	دەمارەکانی خوێن
+nervous_system	کۆئەندامی دەمار	nervous system	BODY_PART
+blood_test	پشکنینی خوێن	blood test	PROCEDURE	شیکردنەوەی خوێن
+blood_glucose_test	پشکنینی شەکری خوێن	blood glucose test	PROCEDURE
+hemoglobin_test	پشکنینی هیمۆگلۆبین	hemoglobin test	PROCEDURE
+urine_test	پشکنینی میز	urine test	PROCEDURE	شیکردنەوەی میز
+stool_test	پشکنینی پیسایی	stool test	PROCEDURE
+sputum_test	پشکنینی بەڵغەم	sputum test	PROCEDURE
+xray	تیشکی ئێکس	X-ray	PROCEDURE	ئێکس ڕەی|تیشکی ئێکس ڕەی
+ultrasound	سۆنار	ultrasound	PROCEDURE	سۆنەر
+ct_scan	سی تی سکان	CT scan	PROCEDURE	سیتی سکان
+mri	ئێم ئاڕ ئای	MRI	PROCEDURE
+ecg	ئی سی جی	electrocardiogram (ECG)	PROCEDURE	هێڵکاری دڵ
+mammography	ماموگرافی	mammography	PROCEDURE
+biopsy	نموونەی شانە	biopsy	PROCEDURE	نموونەی پێست|بایۆپسی
+pulmonary_function_test	پشکنینی کارکردنی سییەکان	pulmonary function test	PROCEDURE
+blood_pressure_measurement	پێوانی پەستانی خوێن	blood pressure measurement	PROCEDURE	پێوانەکردنی پەستانی خوێن
+inflammation	هەوکردن	inflammation	DISEASE	ئیلتیهاب|ئیلتیهابات|هەوکردنەوە
+hypothyroidism	کەمکاری گلاندی دەرەقی	hypothyroidism	DISEASE	هایپۆتایرۆیدیزم|کەمکاری تیرۆید
+hyperthyroidism	زیادکاری گلاندی دەرەقی	hyperthyroidism	DISEASE	هایپەرتایرۆیدیزم|زیادکاری تیرۆید
+behcet	نەخۆشی بەهجەت	Behcet disease	DISEASE	behcet|بەهجەت
+gastritis	هەوکردنی گەدە	gastritis	DISEASE	برینی گەدە
+ampicillin	ئەمپیسیلین	ampicillin	DRUG	ئامپیسیلین
+omeprazole	ئۆمیپرازۆل	omeprazole	DRUG	ئۆمێپرازۆل
+atorvastatin	ئەتۆرڤاستاتین	atorvastatin	DRUG	
+vitamin	ڤیتامین	vitamin	DRUG	ڤیتامینەکان
+injection	دەرزی	injection	PROCEDURE	دەرزی لێدان

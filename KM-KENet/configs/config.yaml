@@ -1,0 +1,275 @@
+# =============================================================================
+# KM-KENet — Kurdish Medical Knowledge Extraction Network
+# Central configuration shared by every pipeline step.
+#
+# * Relative paths are resolved against the project root (the folder that
+#   contains this `configs/` directory).
+# * Any value can be overridden from the command line, e.g.
+#     python -m step4_model_training.main --override training.epochs=3
+# * Floats in scientific notation must contain a dot (3.0e-5, not 3e-5) so
+#   that YAML parses them as numbers.
+# =============================================================================
+
+project:
+  name: KM-KENet
+  seed: 42
+  log_level: INFO
+  device: auto                    # auto | cpu | cuda | mps
+
+paths:
+  corpus_root: ../Kurdish_Medical_Corpus_KMC
+  interim_dir: data/interim
+  processed_dir: data/processed
+  weak_dir: data/weak_labels
+  model_dir: models/km_kenet
+  kg_dir: outputs/knowledge_graph
+  answers_dir: outputs/answers
+  cache_dir: outputs/cache
+  logs_dir: logs
+  lexicon: resources/medical_lexicon.tsv
+  stopwords: resources/stopwords_ckb.txt
+  glossary: resources/en_ckb_glossary.tsv
+
+# -----------------------------------------------------------------------------
+# Step 1 — Data Collection (Kurdish Medical Corpus)
+# -----------------------------------------------------------------------------
+data_collection:
+  min_document_chars: 30
+  medical_filter:                 # only applied to sources with apply_medical_filter
+    min_keyword_hits: 2
+    keywords: [نەخۆشی, چارەسەر, دەرمان, پزیشک, نیشانە, نەخۆشخانە, تەندروستی, پشکنین, ڤاکسین, هەوکردن]
+
+  # Kurdish Medical Corpus (KMC) V1 — kurdish_medical_corpus_kmc.json
+  # 121,918 records: {id, instruction, response, document{title, source_url,
+  # publication_date, domain}, language{code, region}}. The file starts with a
+  # /* ... */ licence header, which the reader strips.
+  # Download it with: python -m setup.download_assets --only dataset
+  kmc_json:
+    enabled: true
+    apply_medical_filter: false
+    hf_repo_id: shkomq/Kurdish_Medical_Corpus_KMC
+    files:
+      - kurdish_medical_corpus_kmc.json
+    directories: []               # e.g. ["Json_Data_From_Website", "3 Medicine Converted Text to Json"]
+    instruction_fields: [instruction, question]
+    response_fields: [response, answer]
+    include_instruction: false    # true = prepend the question to the response text
+    # Records whose *instruction* matches one of these regexes are skipped: they
+    # ask about the book itself (author, translator, printing house, legal
+    # deposit number), not medicine (~270 records). Kept deliberately narrow:
+    # broader words such as "نووسەر" also occur in genuine medical questions.
+    exclude_instruction_patterns:
+      - 'نووسەری (ئەم )?(کتێب|پەرتووک)ەکە'
+      - '(کتێب|پەرتووک)ەکە[^؟]*لە ?لایەن'
+      - 'وەرگێڕی (ئەم )?(کتێب|پەرتووک)'
+      - 'ساڵی چاپ'
+      - 'ژمارەی سپاردن'
+      - 'چاپخانە'
+
+  # Plain text extracted from the KMC medical books (PDF -> text). Disabled by
+  # default because the consolidated JSON above is already built from these books.
+  kmc_books:
+    enabled: false
+    apply_medical_filter: false
+    directories:
+      - 2 Medicine Extract Text From Book
+    join_wrapped_lines: true      # re-join lines broken by the PDF layout
+
+  # Optional: any extra local .txt / .jsonl / .csv files.
+  local_files:
+    enabled: false
+    apply_medical_filter: false
+    directories: [data/raw]
+    extensions: [.txt, .jsonl, .csv]
+    text_field: text
+    title_field: title
+
+  # Optional: crawl health portals (respects robots.txt).
+  web:
+    enabled: false
+    apply_medical_filter: true
+    urls: []
+    request_delay_seconds: 1.5
+    timeout_seconds: 20
+    respect_robots_txt: true
+    user_agent: "KM-KENet-Research-Crawler/1.0 (academic research)"
+
+  # Optional: a Hugging Face dataset (streamed).
+  huggingface:
+    enabled: false
+    apply_medical_filter: true
+    dataset: wikimedia/wikipedia
+    config_name: 20231101.ckb
+    split: train
+    text_field: text
+    title_field: title
+    max_documents: 20000
+    streaming: true
+
+# -----------------------------------------------------------------------------
+# Step 2 — Data Pre-processing (cleaning, normalization, tokenization)
+# -----------------------------------------------------------------------------
+preprocessing:
+  min_sentence_tokens: 4
+  max_sentence_tokens: 96         # longer sentences are split into windows
+  deduplicate_sentences: true
+  cleaning:
+    remove_html: true
+    remove_urls: true
+    remove_emails: true
+    remove_citation_marks: true
+    remove_page_markers: true
+    remove_markdown: true         # KMC responses contain **bold** and "*   " bullets
+  script_filter:
+    allowed_scripts: [arabic]     # add "latin" to also keep Kurmanji (Latin script)
+    min_script_ratio: 0.5         # KMC mixes English drug names into Sorani sentences
+    require_kurdish_letters: true
+    min_kurdish_letter_ratio: 0.02
+  normalization:
+    unicode_nfkc: true
+    unify_arabic_letters: true
+    final_heh_to_ae: true
+    remove_diacritics: true
+    remove_tatweel: true
+    normalize_digits: true
+    lowercase_latin: true
+
+# -----------------------------------------------------------------------------
+# Step 3 — Weak Supervision Labeling
+# -----------------------------------------------------------------------------
+weak_supervision:
+  max_sentences: null             # null = label the whole corpus
+  label_model: dawid_skene        # dawid_skene | majority_vote
+  dawid_skene:
+    max_iter: 100
+    tol: 1.0e-6
+    smoothing: 1.0
+    model_abstains: true
+    fit_sample_size: 2000000      # tokens used to fit the label model
+  # Deterministic rules whose class no other LF votes on (here DOSAGE = <number> <unit>)
+  # cannot be learned by the unsupervised label model; their votes are applied as anchors.
+  anchor_lfs: [heuristic_dosage_span]
+  anchor_confidence: 0.95
+  uncovered_tokens_as_o: true
+  min_token_confidence: 0.5
+  propagation:
+    enabled: true
+    min_count: 3
+    min_purity: 0.85
+    confidence_scale: 0.9
+  relations:
+    min_confidence: 0.5
+    max_token_distance: 25
+  negative_sentence_ratio: 0.2    # entity-free sentences kept, relative to sentences with entities
+  split:                          # paper: 80% training (incl. 10% of it for validation) / 20% testing
+    train: 0.72
+    dev: 0.08
+    test: 0.2
+
+# -----------------------------------------------------------------------------
+# Step 4 — KM-KENet Model Training (XLM-R, joint NER + RE)
+# Defaults follow Table 2 of the paper: XLM-R large (hidden size 1024, 24 layers,
+# 16 heads), max sequence length 256, AdamW, lr 2e-5, weight decay 0.01,
+# batch size 16, 10 epochs, dropout 0.1.
+# For a quick run on a small GPU / CPU use:
+#   --override model.encoder=FacebookAI/xlm-roberta-base --override training.epochs=3
+# -----------------------------------------------------------------------------
+model:
+  encoder: FacebookAI/xlm-roberta-large  # 1024 hidden / 24 layers / 16 heads
+  max_length: 256
+  dropout: 0.1
+  relation_hidden_size: 512
+  type_embedding_dim: 32
+
+training:
+  epochs: 10
+  batch_size: 16
+  eval_batch_size: 64
+  encoder_learning_rate: 2.0e-5
+  head_learning_rate: 1.0e-3
+  weight_decay: 0.01
+  warmup_ratio: 0.1
+  gradient_accumulation_steps: 1
+  max_grad_norm: 1.0
+  fp16: true                      # only used on CUDA
+  ner_loss_weight: 1.0            # alpha in L = alpha * L_NER + beta * L_RE
+  relation_loss_weight: 1.0       # beta
+  no_relation_weight: 0.5
+  use_confidence_weights: true
+  max_negative_relations: 8
+  max_train_examples: 40000       # null = use every weakly labelled sentence
+  max_eval_examples: 5000
+  early_stopping_patience: 3
+  num_workers: 0
+  log_every_steps: 50
+
+# -----------------------------------------------------------------------------
+# Evaluation (paper metrics) and k-fold cross-validation
+#   python -m step4_model_training.evaluate            # test split of a trained model
+#   python -m step4_model_training.cross_validation    # Table 4 of the paper
+# -----------------------------------------------------------------------------
+evaluation:
+  split: test                     # dev | test
+  roc_curve: true                 # save ROC curves (one-vs-rest) as PNG
+  cross_validation:
+    folds: 5
+    epochs: null                  # null = training.epochs
+    max_examples: null            # cap the pooled examples (null = all)
+
+# -----------------------------------------------------------------------------
+# Step 5 — Knowledge Graph Construction
+# -----------------------------------------------------------------------------
+knowledge_graph:
+  use_model: true
+  merge_weak_labels: true         # also add triples from the weakly labelled corpus
+  max_sentences: null             # null = run the model on every sentence
+  batch_size: 64
+  min_entity_confidence: 0.5
+  min_relation_confidence: 0.5
+  min_triple_support: 2
+  max_evidence_per_edge: 10
+  max_sentence_ids_per_node: 200
+  exports:                        # knowledge_graph.json is always written (step 6 reads it)
+    graphml: true
+    csv: true
+    turtle: true                  # RDF/Turtle, queryable with SPARQL (see queries/example_queries.sparql)
+    cypher: true
+    visualization: true
+  visualization_max_nodes: 80
+
+# -----------------------------------------------------------------------------
+# Step 6 — Cross-Lingual Query Translation and Retrieval (Aya)
+# -----------------------------------------------------------------------------
+retrieval:
+  default_query: "What are the treatments for Kurdish-specific health issues?"
+  passage_source: kg_evidence     # kg_evidence | all_sentences
+  embedding_model: intfloat/multilingual-e5-base
+  use_dense_retrieval: true
+  top_k_passages: 8
+  candidate_pool: 100
+  top_k_nodes: 12
+  max_facts: 25
+  rrf_k: 60
+  aya:
+    backend: hf                   # hf | cohere | none
+    hf_model: CohereLabs/aya-expanse-8b
+    cohere_model: c4ai-aya-expanse-32b
+    cohere_api_key_env: COHERE_API_KEY
+    allow_cpu_inference: false    # an 8B model on CPU is very slow
+    load_in_4bit: false           # requires bitsandbytes + CUDA
+    device_map: auto
+    max_new_tokens: 512
+    temperature: 0.2
+
+# -----------------------------------------------------------------------------
+# Asset download (python -m setup.download_assets)
+# Pre-fetches the dataset and every pre-trained model into the Hugging Face
+# cache, so later steps can also run offline (export HF_HUB_OFFLINE=1).
+# Model names are read from model.encoder, retrieval.embedding_model and
+# retrieval.aya.hf_model above.
+# -----------------------------------------------------------------------------
+assets:
+  download_dataset: true
+  download_encoder: true
+  download_embedding_model: true
+  download_aya: true              # ~16 GB; gated — accept the licence on huggingface.co first

@@ -1,0 +1,37 @@
+cff-version: 1.2.0
+message: "If you use this code or the Kurdish Medical Corpus, please cite the article below."
+title: "KM-KENet: A Weakly Supervised Multilingual Framework for Scientific Knowledge Extraction from Low-Resource Language Corpora"
+type: software
+authors:
+  - family-names: Qader
+    given-names: Shko Muhammed
+    email: shkomq@tju.edu.cn
+    orcid: "https://orcid.org/0000-0001-7520-8170"
+    affiliation: "College of Intelligence and Computing, Tianjin University"
+  - family-names: Wang
+    given-names: Zheng
+    affiliation: "College of Intelligence and Computing, Tianjin University"
+repository-code: "https://github.com/shkomq/SciKG-LLM"
+license: MIT
+keywords: [low-resource languages, Kurdish, named entity recognition, relation extraction, weak supervision, knowledge graph, cross-lingual retrieval]
+preferred-citation:
+  type: article
+  title: "A Weakly Supervised Multilingual Framework for Scientific Knowledge Extraction from Low-Resource Language Corpora"
+  authors:
+    - family-names: Qader
+      given-names: Shko Muhammed
+    - family-names: Wang
+      given-names: Zheng
+  journal: "Knowledge and Information Systems"
+  year: 2026
+  notes: "Manuscript under review."
+references:
+  - type: dataset
+    title: "Kurdish Medical Corpus (KMC) V1"
+    authors:
+      - family-names: Qader
+        given-names: Shko Muhammed
+      - family-names: Wang
+        given-names: Zheng
+    year: 2026
+    url: "https://huggingface.co/datasets/shkomq/Kurdish_Medical_Corpus_KMC"

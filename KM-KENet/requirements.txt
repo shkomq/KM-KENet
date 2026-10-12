@@ -1,0 +1,40 @@
+# Core
+numpy>=1.24
+huggingface_hub>=0.23    # dataset/model download (setup/download_assets.py)
+safetensors>=0.4
+pyyaml>=6.0
+tqdm>=4.66
+
+# Step 1 — data collection (web / Hugging Face sources are optional)
+requests>=2.31
+beautifulsoup4>=4.12
+datasets>=2.18
+
+# Step 4 — model training (XLM-R)
+torch>=2.3
+transformers>=4.44
+tokenizers>=0.19
+sentencepiece>=0.1.99
+protobuf>=4.25
+accelerate>=0.33
+seqeval>=1.2.2
+
+# Step 4 — evaluation (paper metrics: specificity, ROC-AUC)
+scikit-learn>=1.3
+
+# Step 5 — knowledge graph
+networkx>=3.2
+matplotlib>=3.8
+rdflib>=7.0              # SPARQL over the RDF/Turtle export
+
+# Step 6 — cross-lingual retrieval (Aya)
+rank-bm25>=0.2.2
+sentence-transformers>=3.0
+
+# Tests
+pytest>=8.0
+
+# Optional
+# bitsandbytes>=0.43   # 4-bit loading of Aya on CUDA (retrieval.aya.load_in_4bit)
+# cohere>=5.5          # Aya through the Cohere API (retrieval.aya.backend: cohere)
+# hf_transfer>=0.1     # faster downloads: export HF_HUB_ENABLE_HF_TRANSFER=1

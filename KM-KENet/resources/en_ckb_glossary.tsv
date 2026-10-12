@@ -1,0 +1,43 @@
+# General English -> Sorani Kurdish terms used by the lexicon-based query
+# translator (fallback when the Aya model is unavailable). Entity names are
+# taken from medical_lexicon.tsv, so only non-entity vocabulary lives here.
+english	kurdish
+treatment	چارەسەر
+treatments	چارەسەر
+treat	چارەسەر
+therapy	چارەسەر
+cure	چارەسەر
+medicine	دەرمان
+medication	دەرمان
+drug	دەرمان
+symptom	نیشانە
+symptoms	نیشانە
+sign	نیشانە
+disease	نەخۆشی
+illness	نەخۆشی
+health issue	نەخۆشی
+health problem	نەخۆشی
+health	تەندروستی
+diagnosis	دەستنیشان
+diagnose	دەستنیشان
+test	پشکنین
+kurdish	کوردستان
+kurdistan	کوردستان
+kurds	کورد
+region	هەرێم
+common	باو
+widespread	بڵاو
+prevalent	بڵاو
+endemic	بڵاو
+specific	تایبەت
+chronic	درێژخایەن
+infection	هەوکردن
+children	منداڵ
+women	ئافرەت
+prevention	ڕێگری
+prevent	ڕێگری
+affect	کاریگەری
+organ	ئەندام
+cause	هۆکار
+causes	هۆکار
+pain	ئازار
