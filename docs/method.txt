@@ -1,1 +1,32 @@
-
+KM-KENet Framework
+==================
+ 
+1. Data Collection
+   - Kurdish Medical Corpus
+ 
+2. Data Pre-processing
+   - Cleaning
+   - Normalization
+   - Tokenization
+ 
+3. Weak Supervision Labeling
+   - Dictionary-Based Labeling
+   - Pattern-Based Labeling
+   - Heuristic Labeling
+   -> Noisy Label Generation
+   -> Label Refinement and Aggregation
+   -> Weakly Labelled Dataset
+ 
+4. KM-KENet Model Training
+   - Fine-tuning Multilingual LLMs (XLM-R)
+     -> Named Entity Recognition
+     -> Relation Extraction
+ 
+5. Knowledge Graph Construction
+   - Medical Knowledge Graph (Structured Semantically)
+ 
+6. Cross Lingual Query Translation and Retrieval
+   - Query: Treatments for Kurdish Specific Health Issues?
+   -> Aya Multilingual Model
+   -> Extracted Answer in English (Based on Kurdish Sources)
+ 
